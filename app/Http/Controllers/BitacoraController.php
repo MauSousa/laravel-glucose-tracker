@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Bitacora\CreateBitacora;
 use App\Http\Requests\StoreBitacoraRequest;
 use App\Http\Requests\UpdateBitacoraRequest;
 use App\Models\Bitacora;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class BitacoraController extends Controller
@@ -30,17 +32,11 @@ class BitacoraController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBitacoraRequest $request): void
+    public function store(StoreBitacoraRequest $request, CreateBitacora $action): RedirectResponse
     {
-        //
-    }
+        $action->handle($request->user(), $request->validated());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bitacora $bitacora): void
-    {
-        //
+        return to_route('bitacora.index')->with(['success' => 'New entrie created']);
     }
 
     /**
@@ -55,14 +51,6 @@ class BitacoraController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateBitacoraRequest $request, Bitacora $bitacora): void
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Bitacora $bitacora): void
     {
         //
     }
