@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Enums\Condition;
 use App\Models\Bitacora;
 use App\Models\User;
+use Illuminate\Support\Facades\Date;
 
 uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
 
@@ -45,7 +47,102 @@ test('to array', function () {
         'time_of_test',
         'glucose',
         'condition',
+        'food',
         'created_at',
         'updated_at',
     ]);
+});
+
+describe('create bitacora', function () {
+    test('user can create new bitacora entrie', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'day' => Date::now()->format('d-m-Y'),
+            'time_of_test' => Date::now()->format('H:i:s'),
+            'glucose' => 126,
+            'condition' => Condition::Ayuno->value,
+            'food' => 'Plato de papaya',
+        ]);
+
+        $response->assertRedirect(route('bitacora.index'));
+    });
+
+    test('user can not create new bitacora entrie if day is not provided', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'time_of_test' => Date::now()->format('H:i:s'),
+            'glucose' => 126,
+            'condition' => Condition::Ayuno->value,
+            'food' => 'Plato de papaya',
+        ]);
+
+        $response->assertSessionHasErrors('day');
+    });
+
+    test('user can not create new bitacora entrie if time is not provided', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'day' => Date::now()->format('d-m-Y'),
+            'glucose' => 126,
+            'condition' => Condition::Ayuno->value,
+            'food' => 'Plato de papaya',
+        ]);
+
+        $response->assertSessionHasErrors('time_of_test');
+    });
+
+    test('user can not create new bitacora entrie if glucose is not provided', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'day' => Date::now()->format('d-m-Y'),
+            'time_of_test' => Date::now()->format('H:i:s'),
+            'condition' => Condition::Ayuno->value,
+            'food' => 'Plato de papaya',
+        ]);
+
+        $response->assertSessionHasErrors('glucose');
+    });
+
+    test('user can not create new bitacora entrie if condition is not provided', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'day' => Date::now()->format('d-m-Y'),
+            'time_of_test' => Date::now()->format('H:i:s'),
+            'glucose' => 124,
+            'food' => 'Plato de papaya',
+        ]);
+
+        $response->assertSessionHasErrors('condition');
+    });
+
+    test('user can not create new bitacora entrie if food is not provided', function () {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->post(route('bitacora.store'), [
+            'day' => Date::now()->format('d-m-Y'),
+            'time_of_test' => Date::now()->format('H:i:s'),
+            'condition' => Condition::Ayuno->value,
+            'glucose' => 124,
+        ]);
+
+        $response->assertSessionHasErrors('food');
+    });
+
 });
