@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', [Settings\PasswordController::class, 'edit'])->name('settings.password.edit');
     Route::put('settings/password', [Settings\PasswordController::class, 'update'])->name('settings.password.update');
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
+});
+
+Route::middleware(['auth', 'verified'])->prefix('bitacora')->name('bitacora.')->group(function () {
+    Route::get('/', [BitacoraController::class, 'index'])->name('index');
+    Route::get('/create', [BitacoraController::class, 'create'])->name('create');
+    Route::post('/', [BitacoraController::class, 'store'])->name('store');
+    Route::get('/{bitacora}/edit', [BitacoraController::class, 'edit'])->name('edit');
+    Route::patch('/{bitacora}', [BitacoraController::class, 'update'])->name('update');
+    // TODO: add route to generate the report
 });
 
 require __DIR__.'/auth.php';
