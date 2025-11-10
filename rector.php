@@ -20,6 +20,14 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_IF_HELPERS,
         LaravelSetList::LARAVEL_TYPE_DECLARATIONS,
     ])
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        privatization: true,
+        earlyReturn: true,
+    )
     ->withConfiguredRule(RemoveDumpDataDeadCodeRector::class, [
         'dd', 'dump', 'var_dump',
     ]);
