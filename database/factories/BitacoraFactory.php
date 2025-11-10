@@ -26,6 +26,7 @@ class BitacoraFactory extends Factory
             'time_of_test' => \Illuminate\Support\Facades\Date::now()->format('H:i:s'),
             'glucose' => $this->faker->randomDigitNotZero(),
             'condition' => $this->faker->randomElement(Condition::cases()),
+            'food' => $this->faker->sentence(),
         ];
     }
 }
