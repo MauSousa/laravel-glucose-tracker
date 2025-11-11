@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\Condition;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBitacoraRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class UpdateBitacoraRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,11 @@ class UpdateBitacoraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'day' => ['nullable', Rule::date()->format('d-m-Y')],
+            'time_of_test' => ['nullable', Rule::date()->format('H:i:s')],
+            'glucose' => ['nullable', 'integer:strict', 'min:0'],
+            'condition' => ['nullable', Rule::enum(Condition::class)],
+            'food' => ['nullable', 'string', 'min:0', 'max:255'],
         ];
     }
 }
