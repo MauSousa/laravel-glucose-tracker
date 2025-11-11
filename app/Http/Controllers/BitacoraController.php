@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Bitacora\CreateBitacora;
+use App\Actions\Bitacora\UpdateBitacora;
 use App\Http\Requests\StoreBitacoraRequest;
 use App\Http\Requests\UpdateBitacoraRequest;
 use App\Models\Bitacora;
@@ -50,8 +51,10 @@ class BitacoraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBitacoraRequest $request, Bitacora $bitacora): void
+    public function update(UpdateBitacoraRequest $request, Bitacora $bitacora, UpdateBitacora $action): RedirectResponse
     {
-        //
+        $action->handle($bitacora, $request->validated());
+
+        return to_route('bitacora.edit', $bitacora)->with(['success' => 'Data updated succesfully']);
     }
 }
