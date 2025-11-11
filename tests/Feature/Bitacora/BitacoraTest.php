@@ -144,5 +144,19 @@ describe('create bitacora', function () {
 
         $response->assertSessionHasErrors('food');
     });
+});
 
+describe('edit bitacora', function () {
+    test('user can edit bitacora', function () {
+        $user = User::factory()->create();
+        $bitacora = Bitacora::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user);
+
+        $response = $this->patch(route('bitacora.update', $bitacora), [
+            'glucose' => 199,
+        ]);
+
+        $response->assertRedirect(route('bitacora.edit', $bitacora));
+    });
 });
