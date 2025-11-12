@@ -10,10 +10,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', [Settings\ProfileController::class, 'edit'])->name('settings.profile.edit');
     Route::put('settings/profile', [Settings\ProfileController::class, 'update'])->name('settings.profile.update');
@@ -23,8 +19,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
 });
 
+Route::get('/dashboard', [BitacoraController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 Route::middleware(['auth', 'verified'])->prefix('bitacora')->name('bitacora.')->group(function () {
-    Route::get('/', [BitacoraController::class, 'index'])->name('index');
     Route::get('/create', [BitacoraController::class, 'create'])->name('create');
     Route::post('/', [BitacoraController::class, 'store'])->name('store');
     Route::get('/{bitacora}/edit', [BitacoraController::class, 'edit'])->name('edit');

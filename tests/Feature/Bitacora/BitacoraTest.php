@@ -15,7 +15,7 @@ describe('smoke tests', function () {
 
         $this->actingAs($user);
 
-        $response = $this->get(route('bitacora.index'));
+        $response = $this->get(route('dashboard'));
         $response->assertOk();
     });
     test('create page shows ok', function () {
@@ -67,7 +67,7 @@ describe('create bitacora', function () {
             'food' => 'Plato de papaya',
         ]);
 
-        $response->assertRedirect(route('bitacora.index'));
+        $response->assertRedirect(route('dashboard'));
     });
 
     test('user can not create new bitacora entrie if day is not provided', function () {

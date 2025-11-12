@@ -19,7 +19,7 @@ class BitacoraController extends Controller
      */
     public function index(): View
     {
-        return view('bitacora.index');
+        return view('dashboard');
     }
 
     /**
@@ -37,7 +37,7 @@ class BitacoraController extends Controller
     {
         $action->handle($request->user(), $request->validated());
 
-        return to_route('bitacora.index')->with(['success' => 'New entrie created']);
+        return to_route('dashboard')->with(['success' => 'New entrie created']);
     }
 
     /**
