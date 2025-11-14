@@ -6,7 +6,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -66,10 +66,10 @@ class User extends Authenticatable
     /**
      * Get the user's bitacora
      *
-     * @return HasOne<Bitacora, $this>
+     * @return HasMany<Bitacora, $this>
      */
-    public function bitacora(): HasOne
+    public function bitacora(): HasMany
     {
-        return $this->hasOne(Bitacora::class);
+        return $this->hasMany(Bitacora::class);
     }
 }
