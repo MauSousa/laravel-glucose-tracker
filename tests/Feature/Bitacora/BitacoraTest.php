@@ -61,7 +61,7 @@ describe('create bitacora', function () {
 
         $response = $this->post(route('bitacora.store'), [
             'day' => Date::now()->format('d-m-Y'),
-            'time_of_test' => Date::now()->format('H:i:s'),
+            'time_of_test' => Date::now()->format('H:i'),
             'glucose' => 126,
             'condition' => Condition::Ayuno->value,
             'food' => 'Plato de papaya',
