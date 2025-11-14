@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
 });
 
-Route::get('/dashboard', [BitacoraController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
+Route::get('/bitacora', [BitacoraController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 Route::middleware(['auth', 'verified'])->prefix('bitacora')->name('bitacora.')->group(function () {
     Route::get('/create', [BitacoraController::class, 'create'])->name('create');
     Route::post('/', [BitacoraController::class, 'store'])->name('store');
