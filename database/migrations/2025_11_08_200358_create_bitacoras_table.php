@@ -21,7 +21,7 @@ return new class extends Migration
             $table->time('time_of_test');
             $table->unsignedInteger('glucose');
             $table->enum('condition', Condition::cases());
-            $table->text('food');
+            $table->text('food')->nullable();
             $table->timestamps();
         });
     }
