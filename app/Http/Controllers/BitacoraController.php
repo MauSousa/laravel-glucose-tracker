@@ -10,6 +10,8 @@ use App\Http\Requests\StoreBitacoraRequest;
 use App\Http\Requests\UpdateBitacoraRequest;
 use App\Models\Bitacora;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
 
 class BitacoraController extends Controller
@@ -19,7 +21,11 @@ class BitacoraController extends Controller
      */
     public function index(): View
     {
-        return view('dashboard');
+        return view('dashboard', [
+            'month' => Date::now()->monthName,
+            'average_glucose' => Bitacora::query()->whereBelongsTo(Auth::user())->whereMonth('day', Date::now()->month)->avg('glucose'),
+            'bitacoras' => Bitacora::query()->whereBelongsTo(Auth::user())->get(),
+        ]);
     }
 
     /**
