@@ -26,9 +26,9 @@ class StoreBitacoraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'day' => ['required', Rule::date()->format('d-m-Y')],
-            'time_of_test' => ['required', Rule::date()->format('H:i:s')],
-            'glucose' => ['required', 'integer:strict', 'min:0'],
+            'day' => ['required', Rule::date()],
+            'time_of_test' => ['required', Rule::date()->format('H:i')],
+            'glucose' => ['required', 'numeric', 'min:0'],
             'condition' => ['required', Rule::enum(Condition::class)],
             'food' => ['required', 'string', 'min:0', 'max:255'],
         ];
