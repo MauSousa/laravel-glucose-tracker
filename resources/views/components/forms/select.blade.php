@@ -8,7 +8,7 @@
 @endif
 
 <select name="{{ $name }}" id="{{ $name }}"
-    {{ $attributes->merge(['class' => 'block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs ' . $labelClass]) }}>
+    {{ $attributes->merge(['class' => 'block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs bg-gray-700' . $labelClass]) }}>
     <option value="" selected>--Please choose an option--</option>
     @forelse ($data as $option)
         <option value="{{ $option }}">{{ $option }}</option>
