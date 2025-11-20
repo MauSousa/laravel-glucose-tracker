@@ -125,7 +125,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
         <!-- Card with Header and Footer -->
         @forelse ($bitacoras as $bitacora)
         <x-card>
@@ -152,4 +152,5 @@
             </div>
         @endforelse
     </div>
+        {{ $bitacoras->links() }}
 </x-layouts.app>

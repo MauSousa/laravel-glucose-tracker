@@ -23,11 +23,11 @@ class BitacoraController extends Controller
     {
         return view('dashboard', [
             'month' => Date::now()->monthName,
-            'average_glucose' => Bitacora::query()->whereBelongsTo(Auth::user())->whereMonth('day', Date::now()->month)->avg('glucose'),
-            'three_month_average_glucose' => Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(3), Date::now()])->avg('glucose'),
-            'six_month_average_glucose' => Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(6), Date::now()])->avg('glucose'),
-            'yearly_average_glucose' => Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subYears(), Date::now()])->avg('glucose'),
-            'bitacoras' => Bitacora::query()->whereBelongsTo(Auth::user())->latest()->get(),
+            'average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereMonth('day', Date::now()->month)->avg('glucose')),
+            'three_month_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(3), Date::now()])->avg('glucose')),
+            'six_month_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(6), Date::now()])->avg('glucose')),
+            'yearly_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subYears(), Date::now()])->avg('glucose')),
+            'bitacoras' => Bitacora::query()->whereBelongsTo(Auth::user())->latest('day')->simplePaginate(10)->withQueryString(),
         ]);
     }
 
