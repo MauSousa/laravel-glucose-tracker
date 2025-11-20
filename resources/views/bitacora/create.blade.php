@@ -3,10 +3,8 @@
             <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('Create entrie') }}</h1>
             <p class="text-gray-600 dark:text-gray-400 mt-1">
                 {{ __('Please fill the following form to create an entrie') }}</p>
-
-            <form method="POST" action="{{ route('bitacora.store') }}">
+            <form method="POST" action="{{ route('bitacora.store') }}" class="space-y-3">
                 @csrf
-
                 <div>
                     <x-forms.input label="Dia" name="day" type="date" value="{{ old('day') }}" />
                 </div>
@@ -24,8 +22,9 @@
                 <div>
                     <x-forms.input label="Alimentos" name="food" type="text" value="{{ old('food') }}" />
                 </div>
-
-                <x-button>Create</x-button>
+                <div class="mt-3">
+                    <x-button>Create</x-button>
+                </div>
             </form>
         </div>
     </x-layouts.app>
