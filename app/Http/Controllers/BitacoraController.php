@@ -40,14 +40,12 @@ class BitacoraController extends Controller
             ],
             'user_years' => Bitacora::query()
                 ->whereBelongsTo(Auth::user())
-                ->distinct()
-                ->orderBy('day', 'asc')
+                ->distinct('day')
                 ->get(['day'])
-                ->map(
-                    fn ($day): array => [
-                        Date::parse($day->day)->year,
-                    ]
-                ),
+                ->map(fn($day) => Date::parse($day->day)->year)
+                ->unique()
+                ->sort()
+                ->values(),
             'average_glucose' => round(
                 Bitacora::query()
                     ->whereBelongsTo(Auth::user())
