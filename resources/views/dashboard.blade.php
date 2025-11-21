@@ -1,10 +1,14 @@
 <x-layouts.app>
     <div class="mb-6 flex justify-between items-center">
+    @if(session('success'))
+<x-toast type="success" position="top-right">
+    Operation completed successfully!
+</x-toast>
+@endif
     <div>
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('Dashboard')}}</h1>
         <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('Welcome to the dashboard') }}</p>
     </div>
-
             <a href="{{route('bitacora.create')}}" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Create an entrie</a>
     </div>
 

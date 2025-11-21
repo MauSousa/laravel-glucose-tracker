@@ -3,6 +3,11 @@
         <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('Update entrie') }}</h1>
         <p class="text-gray-600 dark:text-gray-400 mt-1 mb-2">
             {{ __('Please fill the following form to update an entrie') }}</p>
+        @if (session('success'))
+            <x-toast type="success" position="top-right">
+                Operation completed successfully!
+            </x-toast>
+        @endif
         <form method="POST" action="{{ route('bitacora.update', $bitacora) }}" class="space-y-3">
             @csrf
             @method('PATCH')
