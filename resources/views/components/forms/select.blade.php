@@ -1,4 +1,4 @@
-@props(['label', 'name', 'error' => false, 'class' => '', 'labelClass' => '', 'data' => []])
+@props(['label', 'name', 'error' => false, 'class' => '', 'labelClass' => '', 'data' => [], 'selected' => null])
 
 @if ($label)
     <label for="{{ $name }}"
@@ -9,9 +9,9 @@
 
 <select name="{{ $name }}" id="{{ $name }}"
     {{ $attributes->merge(['class' => 'block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs bg-gray-700' . $labelClass]) }}>
-    <option value="" selected>--Please choose an option--</option>
+    <option value="">--Please choose an option--</option>
     @forelse ($data as $option)
-        <option value="{{ $option }}">{{ $option }}</option>
+        <option value="{{ $option->value }}" @selected($selected == $option->value)>{{ $option->value }}</option>
     @empty
         <option value="" selected>--Please choose an option--</option>
         <option value="dog">Dog</option>
