@@ -125,6 +125,13 @@
         </div>
     </div>
 
+    <div class="flex justify-between items-center p-3">
+    <form method="POST" action="{{route('pdf')}}" target="_blank">
+        @csrf
+        <input hidden name="month" value="{{ request()->month }}" />
+        <input hidden name="year" value="{{ request()->year }}" />
+        <x-button type="danger">Generate PDF Report</x-button>
+    </form>
     <div class="flex justify-end items-center mb-3">
     <form method="GET" action="{{ route('dashboard') }}" class="flex justify-between items-center space-x-3">
         <label for="month">Filter month</label>
@@ -144,6 +151,7 @@
     </form>
     </div>
 
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
         <!-- Card with Header and Footer -->
         @forelse ($bitacoras as $bitacora)

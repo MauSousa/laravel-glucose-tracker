@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\GenerateReportController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,13 @@ Route::middleware(['auth', 'verified'])->prefix('bitacora')->name('bitacora.')->
     Route::post('/', [BitacoraController::class, 'store'])->name('store');
     Route::get('/{bitacora}/edit', [BitacoraController::class, 'edit'])->name('edit');
     Route::patch('/{bitacora}', [BitacoraController::class, 'update'])->name('update');
-    // TODO: add route to generate the report
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'verified', 'throttle:50,1'])->group(function () {
+    Route::get('pdf', function () {
+        return redirect()->route('dashboard');
+    });
+    Route::post('pdf', GenerateReportController::class)->name('pdf');
+});
+
+require __DIR__ . '/auth.php';
