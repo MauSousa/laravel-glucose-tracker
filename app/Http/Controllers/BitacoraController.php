@@ -42,7 +42,7 @@ class BitacoraController extends Controller
                 ->whereBelongsTo(Auth::user())
                 ->distinct('day')
                 ->get(['day'])
-                ->map(fn($day) => Date::parse($day->day)->year)
+                ->map(fn ($day) => Date::parse($day->day)->year)
                 ->unique()
                 ->sort()
                 ->values(),
