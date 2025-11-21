@@ -145,7 +145,7 @@
             <label for="year">Filter Year</label>
             <select id="year" name="year" class='block px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs bg-gray-700'>
                 @foreach ($user_years as $key => $year)
-                    <option value="{{$year[0]}}" @selected($year[0] == request()->year)>{{$year[0]}}</option>
+                    <option value="{{$year}}" @selected($year == request()->year)>{{$year}}</option>
                 @endforeach
             </select>
             <x-button>Filter</x-button>
