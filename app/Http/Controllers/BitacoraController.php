@@ -109,7 +109,12 @@ class BitacoraController extends Controller
      */
     public function edit(Bitacora $bitacora): View
     {
-        return view('bitacora.edit', $bitacora);
+        return view(
+            'bitacora.edit',
+            [
+                'bitacora' => $bitacora,
+            ]
+        );
     }
 
     /**
