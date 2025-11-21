@@ -6,7 +6,7 @@
             <form method="POST" action="{{ route('bitacora.store') }}" class="space-y-3">
                 @csrf
                 <div>
-                    <x-forms.input label="Dia" name="day" type="date" value="{{ old('day') }}" />
+                    <x-forms.input label="Dia" name="day" type="date" value="{{ old('day') }}" autofocus />
                 </div>
                 <div>
                     <x-forms.input label="Hora de la toma" name="time_of_test" type="time"
