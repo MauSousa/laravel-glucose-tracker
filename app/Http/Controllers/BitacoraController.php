@@ -10,6 +10,7 @@ use App\Http\Requests\StoreBitacoraRequest;
 use App\Http\Requests\UpdateBitacoraRequest;
 use App\Models\Bitacora;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\View\View;
@@ -19,15 +20,70 @@ class BitacoraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('dashboard', [
             'month' => Date::now()->monthName,
-            'average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereMonth('day', Date::now()->month)->avg('glucose')),
-            'three_month_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(3), Date::now()])->avg('glucose')),
-            'six_month_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subMonths(6), Date::now()])->avg('glucose')),
-            'yearly_average_glucose' => round(Bitacora::query()->whereBelongsTo(Auth::user())->whereBetween('day', [Date::now()->subYears(), Date::now()])->avg('glucose')),
-            'bitacoras' => Bitacora::query()->whereBelongsTo(Auth::user())->latest('day')->simplePaginate(10)->withQueryString(),
+            'months' => [
+                '01' => 'Enero',
+                '02' => 'Febrero',
+                '03' => 'Marzo',
+                '04' => 'Abril',
+                '05' => 'Mayo',
+                '06' => 'Junio',
+                '07' => 'Julio',
+                '08' => 'Agosto',
+                '09' => 'Septiembre',
+                '10' => 'Octubre',
+                '11' => 'Noviembre',
+                '12' => 'Diciembre',
+            ],
+            'user_years' => Bitacora::query()
+                ->whereBelongsTo(Auth::user())
+                ->distinct()
+                ->orderBy('day', 'asc')
+                ->get(['day'])
+                ->map(
+                    fn ($day) => [
+                        Date::parse($day->day)->year,
+                    ]
+                ),
+            'average_glucose' => round(
+                Bitacora::query()
+                    ->whereBelongsTo(Auth::user())
+                    ->whereMonth('day', Date::now()->month)
+                    ->avg('glucose') ?? 0
+            ),
+            'three_month_average_glucose' => round(
+                Bitacora::query()
+                    ->whereBelongsTo(Auth::user())
+                    ->whereBetween('day', [Date::now()->subMonths(3), Date::now()])
+                    ->avg('glucose') ?? 0
+            ),
+            'six_month_average_glucose' => round(
+                Bitacora::query()
+                    ->whereBelongsTo(Auth::user())
+                    ->whereBetween('day', [Date::now()->subMonths(6), Date::now()])
+                    ->avg('glucose') ?? 0
+            ),
+            'yearly_average_glucose' => round(
+                Bitacora::query()
+                    ->whereBelongsTo(Auth::user())
+                    ->whereBetween('day', [Date::now()->subYears(), Date::now()])
+                    ->avg('glucose') ?? 0
+            ),
+            'bitacoras' => Bitacora::query()
+                ->when($request->month, function ($query, $month) {
+                    $query->whereMonth('day', $month);
+                })
+                ->when($request->year, function ($query, $year) {
+                    $query->whereYear('day', $year);
+                })
+                ->whereBelongsTo(Auth::user())
+                ->latest('day')
+                ->latest('time_of_test')
+                ->simplePaginate(10)
+                ->withQueryString(),
         ]);
     }
 

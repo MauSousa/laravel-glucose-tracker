@@ -125,6 +125,25 @@
         </div>
     </div>
 
+    <div class="flex justify-end items-center mb-3">
+    <form method="GET" action="{{ route('dashboard') }}" class="flex justify-between items-center space-x-3">
+        <label for="month">Filter month</label>
+        <select id="month" name="month" class='block px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs bg-gray-700'>
+            @foreach ($months as $day => $month)
+            <option value="{{$day}}" @selected($day == request()->month)>{{$month}}</option>
+            @endforeach
+        </select>
+        <label for="year">Filter Year</label>
+        <select id="year" name="year" class='block px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs bg-gray-700'>
+            @foreach ($user_years as $key => $year)
+            <option value="{{$year[0]}}" @selected($year[0] == request()->year)>{{$year[0]}}</option>
+            @endforeach
+        </select>
+        <x-button>Filter</x-button>
+        <a href="{{ route('dashboard') }}">Reset Filter</a>
+    </form>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
         <!-- Card with Header and Footer -->
         @forelse ($bitacoras as $bitacora)
@@ -144,10 +163,10 @@
             </x-slot>
         </x-card>
         @empty
-            <div class="flex justify-center-safe space-x-4">
-                <p>There is no data!</p>
+            <div class="flex flex-col justify-center items-center space-x-4 col-span-5 mt-5">
+                <p class="text-xl">There is no data!</p>
                 <div>
-                    <a href="{{route('bitacora.create')}}" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Create an entrie</a>
+                    <a href="{{route('bitacora.create')}}" class="font-medium text-fg-brand text-blue-600 hover:underline">Create an entrie</a>
                 </div>
             </div>
         @endforelse
