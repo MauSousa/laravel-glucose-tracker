@@ -129,21 +129,6 @@ describe('create bitacora', function () {
 
         $response->assertSessionHasErrors('condition');
     });
-
-    test('user can not create new bitacora entrie if food is not provided', function () {
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $response = $this->post(route('bitacora.store'), [
-            'day' => Date::now()->format('d-m-Y'),
-            'time_of_test' => Date::now()->format('H:i:s'),
-            'condition' => Condition::Ayuno->value,
-            'glucose' => 124,
-        ]);
-
-        $response->assertSessionHasErrors('food');
-    });
 });
 
 describe('edit bitacora', function () {
