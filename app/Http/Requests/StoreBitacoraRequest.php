@@ -30,7 +30,7 @@ class StoreBitacoraRequest extends FormRequest
             'time_of_test' => ['required', Rule::date()->format('H:i')],
             'glucose' => ['required', 'numeric', 'min:0'],
             'condition' => ['required', Rule::enum(Condition::class)],
-            'food' => ['required', 'string', 'min:0', 'max:255'],
+            'food' => ['nullable', 'string', 'min:0', 'max:255'],
         ];
     }
 }
