@@ -52,6 +52,7 @@ class BitacoraController extends Controller
                 Bitacora::query()
                     ->whereBelongsTo(Auth::user())
                     ->whereMonth('day', Date::now()->month)
+                    ->whereYear('day', Date::now()->year)
                     ->avg('glucose') ?? 0
             ),
             'three_month_average_glucose' => round(
