@@ -35,4 +35,4 @@ Route::middleware(['auth', 'verified', 'throttle:50,1'])->group(function () {
     Route::post('pdf', GenerateReportController::class)->name('pdf');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
