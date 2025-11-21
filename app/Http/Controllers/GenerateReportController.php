@@ -13,13 +13,13 @@ class GenerateReportController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): \Illuminate\Http\Response
     {
         $data = Bitacora::query()
-            ->when($request->month, function ($query, $month) {
+            ->when($request->month, function ($query, $month): void {
                 $query->whereMonth('day', $month);
             })
-            ->when($request->year, function ($query, $year) {
+            ->when($request->year, function ($query, $year): void {
                 $query->whereYear('day', $year);
             })
             ->whereBelongsTo($request->user())
@@ -27,7 +27,7 @@ class GenerateReportController extends Controller
             ->orderBy('time_of_test', 'asc')
             ->get();
 
-        $pdf = Pdf::loadView('pdf.report', compact('data'));
+        $pdf = Pdf::loadView('pdf.report', ['data' => $data]);
 
         return $pdf->stream();
     }

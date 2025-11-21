@@ -44,7 +44,7 @@ class BitacoraController extends Controller
                 ->orderBy('day', 'asc')
                 ->get(['day'])
                 ->map(
-                    fn ($day) => [
+                    fn ($day): array => [
                         Date::parse($day->day)->year,
                     ]
                 ),
@@ -74,10 +74,10 @@ class BitacoraController extends Controller
                     ->avg('glucose') ?? 0
             ),
             'bitacoras' => Bitacora::query()
-                ->when($request->month, function ($query, $month) {
+                ->when($request->month, function ($query, $month): void {
                     $query->whereMonth('day', $month);
                 })
-                ->when($request->year, function ($query, $year) {
+                ->when($request->year, function ($query, $year): void {
                     $query->whereYear('day', $year);
                 })
                 ->whereBelongsTo(Auth::user())
