@@ -79,6 +79,7 @@ class BitacoraController extends Controller
                     $query->whereYear('day', $year);
                 })
                 ->whereBelongsTo(Auth::user())
+                ->whereMonth('day', Date::now()->month)
                 ->latest('day')
                 ->latest('time_of_test')
                 ->simplePaginate(10)
