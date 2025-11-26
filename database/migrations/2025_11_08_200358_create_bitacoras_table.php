@@ -23,6 +23,8 @@ return new class extends Migration
             $table->enum('condition', Condition::cases());
             $table->text('food')->nullable();
             $table->timestamps();
+
+            $table->index(['day', 'time_of_test']);
         });
     }
 
