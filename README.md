@@ -16,3 +16,10 @@ Simple glucose tracker made with laravel and blade, it has basic statiticts, can
 ## Installation instructions
 1. Clone the repository
 2. Run the following command in the terminal ```composer setup```
+
+## Composer commands
+1. ```composer setup``` to install and setup the project
+2. ```composer lint``` to run formatter for php and blade files
+3. ```composer refactor``` to run rector php
+4. ```composer test:types``` to run php stan static analysis tool
+5. ```composer test``` to run all of the above
