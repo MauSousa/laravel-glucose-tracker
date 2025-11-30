@@ -29,5 +29,8 @@ return RectorConfig::configure()
         earlyReturn: true,
     )
     ->withConfiguredRule(RemoveDumpDataDeadCodeRector::class, [
-        'dd', 'dump', 'var_dump',
-    ]);
+        'dd',
+        'dump',
+        'var_dump',
+    ])
+    ->withSkip(['        NewlineBetweenClassLikeStmtsRector::class']);
